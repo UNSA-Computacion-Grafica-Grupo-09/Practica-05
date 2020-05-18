@@ -20,17 +20,21 @@ imagen_resultado = cv2.cvtColor(imagen_resultado, cv2.COLOR_BGR2RGB)
 
 # Inicializamos los valores 5 10 20  21  
 
-b = 2
+b = 3
 c = 50
 
 alto, ancho = imagen_gray.shape
 
-def point_operator(pixel_RGB):
-    return (c * (np.power(b,imagen_gray[x][y]) - 1))
 
 for x in range(alto):
     for y in range(ancho):
-        imagen_resultado[x][y] = point_operator(imagen_gray[x][y])            
+        resultado = c * (np.power(b,imagen_gray[x][y]) - 1)
+        if resultado > 255:
+            imagen_resultado[x][y] = 255
+        else:
+            imagen_resultado[x][y] = c * (np.power(b,imagen_gray[x][y]) - 1)
+        
+                 
 
 #------------------------------------------------------------------------
 #Implementacion de algoritmo de Raise to the power operator 
@@ -39,18 +43,22 @@ for x in range(alto):
 
 # r = 0.8
 r = 1
-c = 1.1
-# c=0.1
-#valores de c 1 1.2 0.5 0.8 cuando r = 1
+# c = 4
+c = 3
+# #valores de c 1 1.2 0.5 0.8 3 cuando r = 1
 alto, ancho = imagen_gray.shape
 
-def point_operator(pixel_RGB):
-    return (c * (np.power(imagen_gray[x][y] , r)))
 
 for x in range(alto):
     for y in range(ancho):
-        imagen_resultado[x][y] = point_operator(imagen_gray[x][y])            
+        resultado = (c * (np.power(imagen_gray[x][y] , r)))
+        if resultado > 255:
+            imagen_resultado[x][y] = 255
+        elif resultado < 0:
+            imagen_resultado[x][y] = 0
+        else:
+            imagen_resultado[x][y] = (c * (np.power(imagen_gray[x][y] , r)))   
 #-------------------------------------------------------------------------
 
 plt.imshow(imagen_resultado)
-plt.savefig('Imagen_resultado.jpg', bbox_inches='tight')
+plt.savefig('Imagen_resultado_3.jpg', bbox_inches='tight')
